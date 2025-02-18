@@ -1,5 +1,7 @@
-import { abilty } from '@saas/auth'
+import { defineAbilityFor } from '@saas/auth'
 
-const userCanInvite = abilty.can('invite', 'User')
+const ability = defineAbilityFor({ role: 'ADMIN' })
+
+const userCanInvite = ability.can('invite', 'User')
 
 console.log(userCanInvite)

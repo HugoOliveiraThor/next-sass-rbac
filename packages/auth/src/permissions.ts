@@ -1,9 +1,10 @@
 import { AbilityBuilder } from '@casl/ability'
 import { AppAbility } from '.'
+import { User } from './models/user'
 
 type Role = 'ADMIN' | 'MEMBER'
 type PermissionByRole = (
-  user: unknown,
+  user: User,
   builder: AbilityBuilder<AppAbility>
 ) => void
 
