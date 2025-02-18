@@ -1,6 +1,5 @@
 import {
   createMongoAbility,
-  ForcedSubject,
   CreateAbility,
   MongoAbility,
   AbilityBuilder,
@@ -8,23 +7,17 @@ import {
 
 import { permissions } from './permissions'
 import { User } from './models/user'
+import { UserSubject } from './subjects/user'
+import { ProjectSubject } from './subjects/project'
 
-const actions = ['manage', 'invite', 'delete'] as const
-const subjects = ['User', 'all'] as const
-type AppAbilities = [
-  (typeof actions)[number],
-  (
-    | (typeof subjects)[number]
-    | ForcedSubject<Exclude<(typeof subjects)[number], 'all'>>
-  ),
-]
+type AppAbilities = UserSubject | ProjectSubject | ['manage', 'all']
 
 export type AppAbility = MongoAbility<AppAbilities>
 export const createAppAbility = createMongoAbility as CreateAbility<AppAbility>
 
 const { build, can, cannot } = new AbilityBuilder(createAppAbility)
 
-can('invite', 'User')
+// can('invite', 'User')
 cannot('delete', 'User')
 
 export const abilty = build()
